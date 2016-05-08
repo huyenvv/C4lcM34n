@@ -21,14 +21,14 @@ namespace CalcMean.Migrations
 
             context.Users.AddOrUpdate(
               p => p.Id,
-              new CmUser { UserName = "ChinhDD", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Đỗ Đức Chính"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "XuyenHTK", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Kim Xuyến"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "HuyenVV", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Huyền Vũ"), CreateDate = DateTime.Now, PhoneNumber = "0973561921" },
-              new CmUser { UserName = "HoaiNK", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Khắc Hoài"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "HongTD", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Hồng Trần"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "HoanNC", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Công Hoan"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "MinhNH", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Minh Đệ"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" },
-              new CmUser { UserName = "Hang", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Hằng"), CreateDate = DateTime.Now, PhoneNumber = "0979999899" }
+              new CmUser { UserName = "ChinhDD", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Đỗ Đức Chính"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true, CoAnSang = true },
+              new CmUser { UserName = "XuyenHTK", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Kim Xuyến"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true, CoAnSang = true },
+              new CmUser { UserName = "HuyenVV", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Huyền Vũ"), CreateDate = DateTime.Now, PhoneNumber = "0973561921", IsShow = true },
+              new CmUser { UserName = "HoaiNK", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Khắc Hoài"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true, CoAnSang = true },
+              new CmUser { UserName = "HongTD", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Hồng Trần"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true, CoAnSang = true },
+              new CmUser { UserName = "HoanNC", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Công Hoan"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true },
+              new CmUser { UserName = "MinhNH", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Minh Đệ"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true },
+              new CmUser { UserName = "Hang", SecurityStamp = Guid.NewGuid().ToString(), PasswordHash = pass, Name = Common.Encode("Hằng"), CreateDate = DateTime.Now, PhoneNumber = "0979999899", IsShow = true }
             );
         }
     }

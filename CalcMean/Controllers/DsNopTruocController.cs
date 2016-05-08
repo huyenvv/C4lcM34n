@@ -38,7 +38,7 @@ namespace CalcMean.Controllers
                     CreateDate = DateTime.Now,
                 };
             }
-            ViewBag.NguoiNopId = new SelectList(_db.Users.OrderBy(m => m.Name).ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
+            ViewBag.NguoiNopId = new SelectList(_db.Users.Where(m => m.IsShow).OrderBy(m => m.Name).ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
             CreateViewBagDotChotSo(dsnoptruoc.ChotSoId);
             return View(dsnoptruoc);
         }
@@ -72,7 +72,7 @@ namespace CalcMean.Controllers
                 ModelState.AddModelError("ChotSoId", "Chưa chọn đợt chốt sổ");
             }
 
-            ViewBag.NguoiNopId = new SelectList(_db.Users.OrderBy(m => m.Name).ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
+            ViewBag.NguoiNopId = new SelectList(_db.Users.Where(m => m.IsShow).OrderBy(m => m.Name).ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
             CreateViewBagDotChotSo(dsnoptruoc.ChotSoId);
             return View(dsnoptruoc);
         }

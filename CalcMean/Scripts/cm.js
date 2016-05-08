@@ -11,11 +11,14 @@
         }
     });
 
-    $("#SoTien").autoNumeric("init", {
+    $("#SoTien, #TienThuaThangTruoc").autoNumeric("init", {
         aSep: ',',
         aDec: '.',
         mDec: 0
     });
+
+    setCheckAll(".checkAll", ".checkitem");
+    setCheckAll(".checkAllSang", ".checkitemSang");
 });
 
 function beforAddMoney() {
@@ -24,22 +27,24 @@ function beforAddMoney() {
     return true;
 }
 
-// show hide button Edit & Delete when click checkbox
-$(".checkAll").click(function () {
-    if ($(this).is(':checked')) {
-        $(".checkitem").prop('checked', true);
-    } else {
-        $(".checkitem").prop('checked', false);
-    }
-});
-$(".checkitem").click(function () {
-    var numberOfChecked = $('input:checkbox:checked').length;
-    var numberItem = $('input:checkbox.checkitem').length;
-    if ($(this).is(':checked')) {
-        if (numberItem === numberOfChecked) {
-            $(".checkAll").prop('checked', true);
+function setCheckAll(checkAllCls, checkItemCls) {
+    // show hide button Edit & Delete when click checkbox
+    $(checkAllCls).click(function () {
+        if ($(this).is(':checked')) {
+            $(checkItemCls).prop('checked', true);
+        } else {
+            $(checkItemCls).prop('checked', false);
         }
-    } else {
-        $(".checkAll").prop('checked', false);
-    }
-});
+    });
+    $(checkItemCls).click(function () {
+        var numberOfChecked = $('input:checkbox:checked').length;
+        var numberItem = $('input:checkbox' + checkItemCls).length;
+        if ($(this).is(':checked')) {
+            if (numberItem === numberOfChecked) {
+                $(checkAllCls).prop('checked', true);
+            }
+        } else {
+            $(checkAllCls).prop('checked', false);
+        }
+    });
+}

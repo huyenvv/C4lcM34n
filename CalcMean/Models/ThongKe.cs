@@ -11,6 +11,7 @@ namespace CalcMean.Models
         public decimal TongDaNop { get; set; }
         public decimal TongDaAn { get; set; }
         public decimal TienGao { get; set; }
+        public decimal TienThuaThangTruoc { get; set; }
         public DotChotSo DotChot { get; set; }
     }
 
@@ -24,6 +25,7 @@ namespace CalcMean.Models
         public decimal TongChiChuaGao { get; set; }
         public decimal TongTienGao { get; set; }
         public decimal TongChi { get; set; }
+        public decimal TienThuaThangTruoc { get; set; }
     }
 }
 

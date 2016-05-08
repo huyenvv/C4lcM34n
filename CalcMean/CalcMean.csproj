@@ -251,6 +251,8 @@
     <Content Include="Views\ThongKe\MyStatistic.cshtml" />
     <Content Include="Views\TienGao\Index.cshtml" />
     <Content Include="Views\TienGao\CreateOrEdit.cshtml" />
+    <Content Include="Views\Account\CreateOrEdit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

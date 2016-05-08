@@ -15,6 +15,10 @@ namespace CalcMean.Models
         public DateTime CreateDate { get; set; }
         public string PhoneNumber { get; set; }
 
+        public bool IsShow { get; set; }
+
+        public bool CoAnSang { get; set; }
+
         public virtual ICollection<DsNopTruoc> DsNopTruoc { get; set; }
         public virtual ICollection<UserInChiTieu> UserInChiTieu { get; set; }
     }

@@ -15,9 +15,20 @@ namespace CalcMean.Controllers
     {
         private readonly CmContext _db = new CmContext();
         // GET: /DotChotSo/
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _db.DotChotSo.OrderByDescending(m => m.Id).ToListAsync());
+            return View(_db.DotChotSo.Include(m => m.TienGao).OrderByDescending(m => m.Id).ToList().Select(m => new DotChotSo
+            {
+                Id = m.Id,
+                Title = m.Title,
+                StartDate = m.StartDate,
+                EndDate = m.EndDate,
+                IsChot = m.IsChot,
+                TienThuaThangTruoc = m.TienThuaThangTruoc,
+                TongChi = _db.DsChiTieu.Where(n => n.ChotSoId == m.Id).ToList().Sum(n => n.SoTien),
+                TongThu = _db.DsNopTruoc.Where(n => n.ChotSoId == m.Id).ToList().Sum(n => n.SoTien),
+                TienGao = m.TienGao
+            }).ToList());
         }
 
         public async Task<ActionResult> CreateOrEdit(int id = 0)
@@ -40,7 +51,7 @@ namespace CalcMean.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateOrEdit([Bind(Include = "Id,Title,IsChot,StartDate,CreateBy")] DotChotSo dotChotSo)
+        public async Task<ActionResult> CreateOrEdit([Bind(Include = "Id,Title,IsChot,StartDate,CreateBy,TienThuaThangTruoc")] DotChotSo dotChotSo)
         {
             if (ModelState.IsValid)
             {
@@ -48,6 +59,7 @@ namespace CalcMean.Controllers
                 dotChotSo.CreateBy = User.Identity.GetUserId();
                 dotChotSo.StartDate = DateTime.Now;
                 dotChotSo.IsChot = false;
+                dotChotSo.TienThuaThangTruoc = dotChotSo.TienThuaThangTruoc;
 
                 if (dotChotSo.Id > 0)
                 {

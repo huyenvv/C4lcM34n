@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -304,6 +307,82 @@ namespace CalcMean.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
+
+        #region Extend Adding
+        private readonly CmContext _db = new CmContext();
+        [Authorize]
+        public async Task<ActionResult> Index()
+        {
+            return View(await _db.Users.OrderByDescending(m => m.CoAnSang).ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<ActionResult> CreateOrEdit(string id = "")
+        {
+            CmUser user = _db.Users.Find(id);
+            if (user == null)
+            {
+                user = new CmUser
+                {
+                    CreateDate = DateTime.Now,
+                    IsShow = true,
+                };
+            }
+            return View(user.ToCmUserModel());
+        }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateOrEdit(CmUserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                CmUser user = _db.Users.Find(model.Id);
+                if (user != null)
+                {
+                    user.Name = Common.Encode(model.Name);
+                    user.PhoneNumber = model.Phone;
+                    user.IsShow = model.IsShow;
+                    user.CoAnSang = model.CoAnSang;
+                }
+                else
+                {
+                    var hasher = new PasswordHasher();
+                    user = new CmUser
+                    {
+                        UserName = model.UserName,
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        PasswordHash = hasher.HashPassword("111111"),
+                        Name = Common.Encode(model.Name),
+                        CreateDate = DateTime.Now,
+                        PhoneNumber = model.Phone,
+                        IsShow = model.IsShow,
+                        CoAnSang = model.CoAnSang
+                    };
+                    _db.Users.Add(user);
+                }
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [Authorize]
+        public async Task<ActionResult> Delete(string id)
+        {
+            CmUser user = _db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            _db.Users.Remove(user);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

@@ -4,7 +4,10 @@
 @{
     ViewBag.Title = (Model.Id > 0 ? "Sửa" : "Thêm") + " đợt chi tiền";
     var listUser = (IEnumerable<CmUser>)ViewBag.ListUser;
-    var cmUsers = listUser as CmUser[] ?? listUser.ToArray();
+    var cmUsers = listUser.ToList();
+    var chiToi = cmUsers.Where(m => !m.CoAnSang).ToList();
+    var caSangToi = cmUsers.Where(m => m.CoAnSang).ToList();
+
     var listChecked = (List<string>)ViewBag.usersEaten ?? new List<string>();
 }
 
@@ -53,10 +56,13 @@
                         <label>
                             <input type="checkbox" class="checkAll" /> Tất cả
                         </label>
+                        <label>
+                            <input type="checkbox" class="checkAllSang" /> Chỉ Sáng
+                        </label>
                     </li>
-                    @for (int i = 0; i < cmUsers.Length; i++)
+                    @for (int i = 0; i < chiToi.Count; i++)
                     {
-                        var item = cmUsers.ElementAt(i);
+                        var item = chiToi.ElementAt(i);
                         var setChecked = listChecked.Contains(item.Id) ? "checked='checked'" : "";
                         <li class="list-group-item">
                             <label>
@@ -64,8 +70,19 @@
                             </label>
                         </li>
                     }
+                    @for (int i = 0; i < caSangToi.Count; i++)
+                    {
+                        var item = caSangToi.ElementAt(i);
+                        var setChecked = listChecked.Contains(item.Id) ? "checked='checked'" : "";
+                        <li class="list-group-item">
+                            <label>
+                                <input type="checkbox" value="@item.Id" class="checkitem checkitemSang" @setChecked /> @Common.Decode(item.Name)
+                            </label>
+                        </li>
+                    }
                 </ul>
             </div>
+
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Nội dung</label>

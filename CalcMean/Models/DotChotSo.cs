@@ -14,6 +14,7 @@ namespace CalcMean.Models
         public string Title { get; set; }
         public decimal? TongThu { get; set; }
         public decimal? TongChi { get; set; }
+        public decimal? TienThuaThangTruoc { get; set; }
         public bool IsChot { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

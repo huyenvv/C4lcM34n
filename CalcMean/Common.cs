@@ -47,5 +47,32 @@ namespace CalcMean
             from.Title = Common.Decode(from.Title);
             return from;
         }
+
+        public static CmUser ToCmUser(this CmUserModel from)
+        {
+            return new CmUser
+            {
+                Id = from.Id,
+                UserName = Common.Encode(from.UserName),
+                Name = from.Name,
+                PhoneNumber = from.Phone,
+                IsShow = from.IsShow,
+                CoAnSang = from.CoAnSang,
+            };
+        }
+
+        public static CmUserModel ToCmUserModel(this CmUser from)
+        {
+            return new CmUserModel
+            {
+                UserName = from.UserName,
+                Name = from.Name,
+                Phone = from.PhoneNumber,
+                IsShow = from.IsShow,
+                CoAnSang = from.CoAnSang,
+                Password = from.PasswordHash,
+                ConfirmPassword = from.PasswordHash
+            };
+        }
     }
 }

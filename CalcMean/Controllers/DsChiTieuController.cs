@@ -40,7 +40,7 @@ namespace CalcMean.Controllers
                 };
             }
 
-            var dsUser = _db.Users.OrderBy(m => m.Name);
+            var dsUser = _db.Users.Where(m=>m.IsShow).OrderBy(m => m.Name);
             ViewBag.NguoiTieuId = new SelectList(dsUser.ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
             CreateViewBagDotChotSo(dsChiTieu.ChotSoId);
             ViewBag.ListUser = dsUser;
@@ -93,7 +93,7 @@ namespace CalcMean.Controllers
                 }
             }
 
-            var dsUser = _db.Users.OrderBy(m => m.Name);
+            var dsUser = _db.Users.Where(m => m.IsShow).OrderBy(m => m.Name);
             ViewBag.NguoiTieuId = new SelectList(dsUser.ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
             CreateViewBagDotChotSo(dsChiTieu.ChotSoId);
             ViewBag.ListUser = dsUser;

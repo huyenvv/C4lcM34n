@@ -27,12 +27,15 @@ namespace CalcMean.Controllers
             var tongSoLuotAn = dsUserInChiTieu.Count;
             var tongSoTienGao = _db.TienGao.Where(m => m.ChotSoId == dotchotso.Id).ToList().Sum(m => m.SoTien);
             var tbtienGao1LuotAn = tongSoLuotAn > 0 ? tongSoTienGao / tongSoLuotAn : 0;
-            var listReturn = _db.Users.OrderBy(m => m.Name).ToList().Select(m => new MyStatistic
+            var dsNguoiAn = _db.Users.Where(m => m.IsShow).ToList();
+            var tienThuaThangTruoc1Ng = (dotchotso.TienThuaThangTruoc ?? 0) / dsNguoiAn.Count;
+            var listReturn = dsNguoiAn.OrderBy(m => m.Name).ToList().Select(m => new MyStatistic
             {
                 User = m,
                 TongDaAn = dsUserInChiTieu.Where(n => n.ForUserId == m.Id).Select(n => n.SoTien).Sum(),
                 TongDaNop = dsDaNop.Where(n => n.NguoiNopId == m.Id).Select(n => n.SoTien).Sum(),
                 TienGao = tbtienGao1LuotAn * dsUserInChiTieu.Count(n => n.ForUserId == m.Id),
+                TienThuaThangTruoc = tienThuaThangTruoc1Ng
             }).ToList();
 
             var tongthu = dsDaNop.Sum(m => m.SoTien);
@@ -47,6 +50,7 @@ namespace CalcMean.Controllers
                 TongChiChuaGao = tongchichuagao,
                 TongTienGao = tongSoTienGao,
                 TongChi = tongchichuagao + tongSoTienGao,
+                TienThuaThangTruoc = dotchotso.TienThuaThangTruoc ?? 0,
                 List = listReturn
             });
         }
