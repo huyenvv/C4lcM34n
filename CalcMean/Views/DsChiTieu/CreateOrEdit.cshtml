@@ -11,8 +11,8 @@
     var listChecked = (List<string>)ViewBag.usersEaten ?? new List<string>();
 }
 
+<link href="@Url.Content("~/Content/jquery-ui.min.css")" rel="stylesheet" />
 <h2>@ViewBag.Title</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -23,7 +23,6 @@
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.CreateBy)
-        @Html.HiddenFor(model => model.CreateDate)
         <div id="listUserEaten">
 
         </div>
@@ -85,6 +84,13 @@
 
         </div>
         <div class="form-group">
+            <label class="control-label col-md-2">Ngày tiêu</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CreateDate, new { @class = "form-control typedate", Value = Model.CreateDate.ToString("dd/MM/yyyy") })
+                @Html.ValidationMessageFor(model => model.CreateDate)
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-md-2">Nội dung</label>
             <div class="col-md-10">
                 <textarea name="Title" class="form-control" id="Title" rows="5">@Common.Decode(Model.Title)</textarea>
@@ -99,10 +105,13 @@
         </div>
     </div>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
     <script>
+        $(function () {
+            $(".typedate").datepicker({ dateFormat: 'dd/mm/yy' });
+        });
         function addUserEaten() {
             var arr = [];
             $(".checkitem:checked").each(function (i) {

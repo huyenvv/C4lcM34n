@@ -22,7 +22,7 @@ namespace CalcMean.Controllers
 
             if (dotChotGanNhat == null) return View(await _db.TienGao.ToListAsync());
 
-            var tienGao = _db.TienGao.Where(m => m.ChotSoId == dotChotGanNhat.Id);
+            var tienGao = _db.TienGao.Where(m => m.ChotSoId == dotChotGanNhat.Id).OrderBy(m => m.CreateDate).ThenBy(m => m.Id);
             CreateViewBagDotChotSo(dotChotGanNhat.Id);
             return View(await tienGao.ToListAsync());
         }

@@ -25,7 +25,7 @@ namespace CalcMean.Controllers
 
             var dschitieu = _db.DsChiTieu.Where(m => m.ChotSoId == dotChotGanNhat.Id);
             CreateViewBagDotChotSo(dotChotGanNhat.Id);
-            return View(await dschitieu.Include(d => d.DotChotSo).Include(m => m.UserInChiTieu).ToListAsync());
+            return View(await dschitieu.OrderBy(m => m.CreateDate).ThenBy(m=>m.Id).Include(d => d.DotChotSo).Include(m => m.UserInChiTieu).ToListAsync());
         }
 
         public async Task<ActionResult> CreateOrEdit(int id = 0)
@@ -40,7 +40,7 @@ namespace CalcMean.Controllers
                 };
             }
 
-            var dsUser = _db.Users.Where(m=>m.IsShow).OrderBy(m => m.Name);
+            var dsUser = _db.Users.Where(m => m.IsShow).OrderBy(m => m.Name);
             ViewBag.NguoiTieuId = new SelectList(dsUser.ToList().Select(m => new { m.Id, Name = Common.Decode(m.Name) }), "Id", "Name");
             CreateViewBagDotChotSo(dsChiTieu.ChotSoId);
             ViewBag.ListUser = dsUser;
@@ -60,7 +60,7 @@ namespace CalcMean.Controllers
                     {
                         dsChiTieu.Title = Common.Encode(dsChiTieu.Title);
                         dsChiTieu.CreateBy = CurrentUser().Id;
-                        dsChiTieu.CreateDate = DateTime.Now;
+                        dsChiTieu.CreateDate = dsChiTieu.CreateDate;
                         var listUserInChiTieuNew = usersEaten.Select(m => new UserInChiTieu
                         {
                             ForUserId = m,
