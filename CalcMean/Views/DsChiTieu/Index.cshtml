@@ -3,6 +3,7 @@
 @using CalcMean.Models;
 @{
     ViewBag.Title = "Danh sách đã chi tiêu hàng ngày";
+    string[] dsThu = { "CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
 }
 
 <h2>@ViewBag.Title</h2>
@@ -33,7 +34,7 @@
                         Những ai ăn
                     </th>*@
                 <th>
-                    Ngày tiêu
+                    Ngày tiêu (Thứ)
                 </th>
                 <th>
                     Nội dung
@@ -60,14 +61,14 @@
                                     }
                                 </td>*@
                             <td>
-                                @Html.DisplayFor(modelItem => item.CreateDate)
+                                @Html.DisplayFor(modelItem => item.CreateDate) (@dsThu[(int)item.CreateDate.DayOfWeek])
                             </td>
                             <td>
                                 @Common.Decode(item.Title)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "CreateOrEdit", new {id = item.Id}, new {Class = "btn btn-xs btn-default"})
-                                @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {Class = "confirmDelete btn btn-xs btn-danger"})
+                                @Html.ActionLink("Edit", "CreateOrEdit", new { id = item.Id }, new { Class = "btn btn-xs btn-default" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { Class = "confirmDelete btn btn-xs btn-danger" })
                             </td>
                         </tr>
                     }
